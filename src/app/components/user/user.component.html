@@ -1,0 +1,448 @@
+<div class="alert alert-info" role="alert" *ngIf="mainMessage">
+    {{mainMessage}}
+</div>
+
+<div class="card-deck">
+    <!-- Find User By ID -->
+    <mdb-card>
+        <mdb-card-body>
+            <mdb-card-title>
+                <h4>Find User By ID</h4>
+            </mdb-card-title>
+            <mdb-card-text>
+                Will retrieve the user based on corresponding ID
+            </mdb-card-text>
+            <button type="button" mdbBtn color="primary" (click)="findUserByIdModal.show();">Open</button>
+        </mdb-card-body>
+    </mdb-card>
+
+    <!-- Find User By Criteria -->
+    <mdb-card>
+        <mdb-card-body>
+            <mdb-card-title>
+                <h4>Find User By Criteria</h4>
+            </mdb-card-title>
+            <mdb-card-text>
+                Will retrieve the user based on specific criteria
+            </mdb-card-text>
+            <button type="button" mdbBtn color="primary" (click)="findByCriteriaModal.show();">Open</button>
+        </mdb-card-body>
+    </mdb-card>
+
+    <!-- Add new user -->
+    <mdb-card>
+        <mdb-card-body>
+            <mdb-card-title>
+                <h4>Add new user</h4>
+            </mdb-card-title>
+            <mdb-card-text>
+                Add new user to the list
+            </mdb-card-text>
+            <button type="button" mdbBtn color="primary" (click)="addNewUserModal.show();">Open</button>
+        </mdb-card-body>
+    </mdb-card>
+
+    <!-- Logout -->
+    <body>
+         <button type="button" mdbBtn color="primary" (click)="logout();">Logout</button>
+    </body>
+</div>
+        
+<br />
+
+<!-- Find All Users -->
+<table mdbTable>
+    <thead class="black white-text">
+        <tr>
+            <th *ngFor="let head of usersTable" scope="col">{{head}}</th>
+            <th *ngIf="filterInPlace" scope="col">
+                <i class="fa fa-sync fa-lg" style="cursor: pointer; color: white;" (click)="resetFilter();"></i>
+            </th>
+            <th *ngIf="filterInPlace === false" scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr mdbTableCol *ngFor="let user of usersArray">
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.username}}</td>
+            <td>{{user.password}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.age}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phoneNum}}</td>
+            <td><i class="fa fa-edit fa-lg" style="cursor: pointer; color: rgb(7, 255, 7);"
+                    (click)="openUpdateUserModal(user);"></i></td>
+            <td><i class="fa fa-trash fa-lg" style="cursor: pointer; color: red;"
+                    (click)="openDeleteUserModal(user);"></i></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Add new user modal -->
+<div mdbModal #addNewUserModal="mdbModal" class="modal fade left" tabindex="-1" role="dialog" style="overflow-y: auto;"
+    aria-labelledby="addNewUserModal" aria-hidden="true" (opened)="clearData();">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="addNewUserModal.hide();">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title w-100" id="addNewUserModal">Add New User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row alert alert-primary" role="alert" *ngIf="addNewUserInfoMessage">
+                    <div class="col-md-12">
+                        {{addNewUserInfoMessage}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                First Name:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbInput type="text" [(ngModel)]="firstName" class="form-control" value={{firstName}}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                LastName:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbinput type="text" [(ngModel)]="lastName" class="form-control" value={{lastName}}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                Username:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbinput type="text" [(ngModel)]="username" class="form-control" value={{username}}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                Password:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbinput type="password" [(ngModel)]="password" class="form-control" value={{password}}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                Age:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbinput type="text" [(ngModel)]="age" class="form-control" value={{age}}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                Email:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbinput type="text" [(ngModel)]="email" class="form-control" value={{email}}>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                Phonenumber:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbinput type="text" [(ngModel)]="phoneNum" class="form-control" value={{phoneNum}}>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="primary" class="waves-light" aria-label="save"
+                    (click)="addNewUser();" mdbWavesEffect>Save</button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-labelledby="Cancel"
+                    (click)="addNewUserModal.hide();" mdbWavesEffect>Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Find User By ID Modal -->
+<div mdbModal #findUserByIdModal="mdbModal" class="modal fade left" tabindex="-1" role="dialog" style="overflow-y: auto"
+    aria-labelledby="findUserByIdModal" aria-hidden="true" (opened)="clearData();">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull right" aria-label="Close" (click)="findUserByIdModal.hide();">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title w-100" id="findUserByIdModal">Find By Id</h4>
+            </div>
+            <div class="modal-body">
+                <div class="rpw alert alert-primary" role="alert" *ngIf="findUserByIdMessage">
+                    <div class="col-md-12">
+                        {{findUserByIdMessage}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                ID:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbInput type="text" [(ngModel)]="id" class="form-contrl" value="{{id}}">
+                    </div>
+                </div>
+                <div class="modal-footoer">
+                    <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Find"
+                        (click)="findUserByIdMessage='';findUserById();" mdbWavesEffect>Find</button>
+                    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Cancel"
+                        (click)="findUserByIdModal.hide();" mdbWavesEffect>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Find User By Criteria -->
+<div mdbModal #findByCriteriaModal="mdbModal" class="modal fade left" tabindex="-1" role="dialog"
+    style="overflow-y: auto;" aria-labelledby="findByCriteriaModal" aria-hidden="true" opened="clearData();">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="close" (click)="findByCriteriaModal.hide();">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title w-100" id="findByCriteriaModal">Find By Criteria</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row alert alert-primary" role="alert" *ngIf="findByCriteriaMessage">
+                    <div class="col-md-12">
+                        {{findByCriteriaMessage}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                Criteria:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <select class="browser-default custom-select" name="criteria" id="criteria">
+                            <option *ngFor="let opt of criteriaArray" value="{{opt}}">{{opt}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>
+                            <mdb-badge default="true">
+                                Search Item:
+                            </mdb-badge>
+                        </h5>
+                    </div>
+                    <div class="col-md-8">
+                        <input mdbInput type="text" [(ngModel)]="searchItem" class="form-control"
+                            value="{{searchItem}}">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Find"
+                    (click)="findByCriteriaMessage='';findByCriteria();" mdbWavesEffect>Find</button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Cancel"
+                    (click)="findByCriteriaModal.hide();" mdbWavesEffect>Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete User Modal -->
+<div mdbModal #deleteUserModal="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="deleteUserModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Confirm removal of user with id {{id}}?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="deleteUserModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-2 text-center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Ok"
+                            (click)="deleteUser();" mdbWavesEffect>Ok</button>
+                        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Cancel"
+                            (click)="deleteUserModal.hide();" mdbWavesEffect>Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update User Modal -->
+<div mdbModal #updateUserModal="mdbModal" class="modal fade left" tabindex="-1" role="dialog"
+  style="overflow-y: auto;" aria-labelledby="updateUserModal" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close"
+        (click)="updateUserModal.hide();">
+        <span aria-hidden="true">×</span>
+      </button>
+      <h4 class="modal-title w-100" id="updateUserModal">Update user</h4>
+    </div>
+    <div class="modal-body">
+      <div class="row alert alert-primary" role="alert" *ngIf="updatedUserMessage">
+        <div class="col-md-12">
+          {{updatedUserMessage}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <mdb-badge default="true">
+              FirstName:
+            </mdb-badge>
+          </h5>
+        </div>
+        <div class="col-md-8">
+          <input mdbInput type="text" [(ngModel)]="firstName" class="form-control"
+            value={{firstName}}>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <mdb-badge default="true">
+              LastName:
+            </mdb-badge>
+          </h5>
+        </div>
+        <div class="col-md-8">
+          <input mdbInput type="text" [(ngModel)]="lastName" class="form-control"
+            value={{lastName}}>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <mdb-badge default="true">
+              Username:
+            </mdb-badge>
+          </h5>
+        </div>
+        <div class="col-md-8">
+          <input mdbInput type="text" [(ngModel)]="username" class="form-control"
+            value={{username}}>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <mdb-badge default="true">
+              Password:
+            </mdb-badge>
+          </h5>
+        </div>
+        <div class="col-md-8">
+          <input mdbInput type="password" [(ngModel)]="password" class="form-control"
+            value={{password}}>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <mdb-badge default="true">
+              Age:
+            </mdb-badge>
+          </h5>
+        </div>
+        <div class="col-md-8">
+          <input mdbInput type="text" [(ngModel)]="age" class="form-control"
+            value={{age}}>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <mdb-badge default="true">
+              Country:
+            </mdb-badge>
+          </h5>
+        </div>
+        <div class="col-md-8">
+          <input mdbInput type="text" [(ngModel)]="email" class="form-control"
+            value={{email}}>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h5>
+            <mdb-badge default="true">
+              Country:
+            </mdb-badge>
+          </h5>
+        </div>
+        <div class="col-md-8">
+          <input mdbInput type="text" [(ngModel)]="phoneNum" class="form-control"
+            value={{phoneNum}}>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Save"
+        (click)="updateUser();" mdbWavesEffect>Update</button>
+      <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Cancel"
+        (click)="updateUserModal.hide();" mdbWavesEffect>Cancel</button>
+    </div>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,176 @@
+<div mdbModal #authenticationModal="mdbModal" id="authenticationModal" class="modal fade" tabindex="-1" role="dialog" [config]="{backdrop: 'static',  keyboard: false}"
+    style="overflow-y : auto;" aria-labelledby="authenticationModal" aria-hidden="true" (closed)="clearFormData();">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Login</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row alert alert-primary" role="alert" *ngIf="errorMessage">
+                    <div class="col-md-12">
+                        {{errorMessage}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>
+                            <mdb-badge default="true">
+                                Username:
+                            </mdb-badge>
+                        </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input mdbInput type="text" id="username" class="form-control" name="username"
+                            placeholder="Username" [(ngModel)]="username" required focus>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>
+                            <mdb-badge default="true">
+                                Password:
+                            </mdb-badge>
+                        </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input mdbInput type="password" id="password" class="form-control" placeholder="Password"
+                            name="password" [(ngModel)]="password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                    (click)="forgotPasswordModal.show(); authenticationModal.hide()" mdbWavesEffect>
+                    <span #defaultButton>Forgot Password</span>
+                </button>
+                <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                    (click)="login();" mdbWavesEffect>
+                    <span #defaultButton>Login</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div mdbModal #forgotPasswordModal="mdbModal" id="forgotPasswordModal" class="modal fade" tabindex="-1" role="dialog" [config]="{backdrop: 'static',  keyboard: false}"
+    style="overflow-y : auto;" aria-labelledby="authenticationModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Forgot Password</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row alert alert-primary" role="alert" *ngIf="emailMessage">
+                    <div class="col-md-12">
+                        {{emailMessage}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>
+                            <mdb-badge default="true">
+                                Email:
+                            </mdb-badge>
+                        </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input mdbInput type="text" id="email" class="form-control" name="email" placeholder="Email"
+                            [(ngModel)]="email" required focus>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                        (click)="forgotPasswordModal.hide(); showModal();" mdbWavesEffect>
+                        <span #defaultButton>Back</span>
+                    </button>
+                    <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                        (click)="forgotPassword(); clearFormData()" mdbWavesEffect>
+                        <span #defaultButton>Send Mail</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div mdbModal #OTPModal="mdbModal" id="OTPModal" class="modal fade" tabindex="-1" role="dialog" [config]="{backdrop: 'static',  keyboard: false}"
+    style="overflow-y : auto;" aria-labelledby="OTPModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>OTP</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row alert alert-primary" role="alert" *ngIf="OTPMessage">
+                    <div class="col-md-12">
+                        {{OTPMessage}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>
+                            <mdb-badge default="true">
+                                OTP:
+                            </mdb-badge>
+                        </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input mdbInput type="text" id="OTP" class="form-control" name="OTP" placeholder="OTP"
+                            [(ngModel)]="OTP" required focus>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                        (click)="OTPModal.hide(); forgotPasswordModal.show();" mdbWavesEffect>
+                        <span #defaultButton>Back</span>
+                    </button>
+                    <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                        (click)="checkOTP();" mdbWavesEffect>
+                        <span #defaultButton>Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div mdbModal #changePasswordModal="mdbModal" id="changePassword" class="modal fade" tabindex="-1" role="dialog" [config]="{backdrop: 'static',  keyboard: false}"
+    style="overflow-y : auto;" aria-labelledby="changePasswordModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Change Password</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row alert alert-primary" role="alert" *ngIf="changePasswordMessage">
+                    <div class="col-md-12">
+                        {{changePasswordMessage}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>
+                            <mdb-badge default="true">
+                                New password:
+                            </mdb-badge>
+                        </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <input mdbInput type="password" id="changePassword" class="form-control" name="newPassword" placeholder="New Password"
+                            [(ngModel)]="newPassword" required focus>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                        (click)="forgotPasswordModal.show(); changePasswordModal.hide();" mdbWavesEffect>
+                        <span #defaultButton>Back</span>
+                    </button>
+                    <button type="button" mdbBtn color="primary" class="waves-light" aria-label="Authentication"
+                        (click)="newPasswordChange();" mdbWavesEffect>
+                        <span #defaultButton>Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
