@@ -46,7 +46,7 @@ usersTable: any = ['ID', 'Username', 'Password', 'First Name', 'Last Name', 'Age
   findByCriteriaMessage: string = ''
   criteria: string = ''
   searchItem: string = ''
-  criteriaArray: any = ['Username', 'First Name', 'Last Name', 'Age', 'Email', 'Phone Num']
+  criteriaArray: any = ['username', 'firstName', 'lastName', 'age', 'email', 'phoneNum']
   
   //Detele User
   @ViewChild("deleteUserModal") deteleUserModal!: ModalDirective
