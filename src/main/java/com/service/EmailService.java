@@ -75,17 +75,6 @@ public class EmailService {
 		int OTP = r.nextInt(100000, 999999);
 		
 		String signal = String.valueOf(OTP);
-		
-		boolean check = userRepository.findByOTP(signal);
-		
-		while(check) {
-			OTP = r.nextInt(100000, 999999);
-			signal = String.valueOf(OTP);
-			
-			check = userRepository.findByOTP(signal);
-		}
-		
-		return signal;
 	}
 	
 	public String checkOTP(OTPCheck otpCheck) {
