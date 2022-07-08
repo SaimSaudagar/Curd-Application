@@ -1,8 +1,11 @@
 # Curd-Application
 CRUD application with login and forget password
 
+Backend is on Java Spring Boot in the Backend branch
+Frontend is on Angular 10 in the Frontend Branch
+
 Enter you email and password in the application properties to enable the forget password email service.
 
-Backend is on Java Spring Boot in the Backend branch
+I have commented the https configuration in the application properties
 
-Frontend is on Angular 10 in the Frontend Branch
+You would have to use MySQL database with MySQL57Dialect
