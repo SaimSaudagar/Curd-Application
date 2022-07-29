@@ -8,4 +8,4 @@ Enter you email and password in the application properties to enable the forget 
 
 I have commented the https configuration in the application properties
 
-You would have to use MySQL database with MySQL57Dialect
+Intial login credentials are Username: hil Password: hil1234
